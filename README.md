@@ -10,10 +10,13 @@ I'm a lone developer so I cram everything into two boards.
 One is a main board and the other is a giant backlog.
 
 
-## GitLab
+## Archive - GitLab-Trello
 For my first issue migration, I wrote a set of subpar Python scripts.
 I only made a set of scripts for migrating from GitLab to Trello.
 
+```python3 gitlab-export.py ; python3 trello-gitlab-import.py```
+
+I figured I'd include this for sake of completion.
 
 
 ## References
