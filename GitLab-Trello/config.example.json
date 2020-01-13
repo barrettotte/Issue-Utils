@@ -1,0 +1,36 @@
+// Colors:  "green", "yellow", "orange", "red", "purple", "blue", "sky", "lime", "pink", "black"
+{
+    "save-path": "./",
+    "gitlab": {
+        "url": "https://gitlab.com/api/v4/projects",
+        "projId": "xxx",
+        "token": "xxx"
+    },
+    "trello":{
+        "apiKey": "xxx",
+        "boardId": "xxx",
+        "label-mapping": {
+            "gitlab": {
+                "ignore": [
+                    "Doing",
+                    "Next",
+                    "To Do"
+                ],
+                "colors": {
+                    "label1": "blue",
+                    "label2": "purple",
+                    "label3": "red"
+                }
+            }
+        },
+        "list-mapping": {
+            "gitlab": {
+                "closedId": "xxx",
+                "openId": "xxx"
+            }
+        },
+        "memberId": "xxx",
+        "token": "xxx",
+        "url": "https://api.trello.com/1/"
+    }
+}
