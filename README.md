@@ -19,5 +19,13 @@ I only made a set of scripts for migrating from GitLab to Trello.
 I figured I'd include this for sake of completion.
 
 
+## To Do
+* Universal issue model
+* Export from Trello
+* Import to GitKraken Glo
+* Export from GitKraken Glo
+* Import issues to MSSQL table
+
+
 ## References
 * Trello API reference - https://developers.trello.com/reference/
