@@ -1,0 +1,21 @@
+{
+    "export": "./",
+    "gitkraken": {
+      "apikey": ""
+    },
+    "trello": {
+      "apikey": "",
+      "boards": [
+        {
+          "name": "Main",
+          "id": ""
+        },
+        {
+          "name": "Backlog",
+          "id": ""
+        }
+      ],
+      "token": "",
+      "url": "https://api.trello.com/1/"
+    }
+  }
