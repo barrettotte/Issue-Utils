@@ -35,7 +35,7 @@ I figured I'd include this for sake of completion.
 
 
 ## To Do
-* Export from GitLab again
+* Rewrite GitLab exporter
 * Import to GitKraken Glo
 * Export from GitKraken Glo
 * Import issues to MSSQL table

@@ -5,7 +5,7 @@ class Issue:
     description = ''
     list_id = ''
     board_id = ''
-    milestone_id = ''
+    milestone = ''
     labels = []
     name = ''
     position = 0
@@ -26,7 +26,7 @@ class Issue:
         self.description = data['desc']
         self.list_id = data['idList']
         self.board_id = data['idBoard']
-        self.milestone_id = None
+        self.milestone = -1
         self.name = data['name']
         self.position = data['pos'] if self.is_open else None
         self.completed_date = data['due']  # 2019-03-10T22:08:33.908Z

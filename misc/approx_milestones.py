@@ -8,7 +8,7 @@ def main():
     trello = {}
     date_fmt = "%Y-%m-%dT%H:%M:%S.%fZ"
 
-    with open('export-trello.json', 'r') as f: 
+    with open('trello.export.json', 'r') as f: 
         trello = json.load(f)
 
     # I only close issues on my 'Main' board, so hardcode index   

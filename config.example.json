@@ -1,21 +1,35 @@
 {
-    "export": "./",
-    "gitkraken": {
-      "apikey": ""
+  "export": ".",
+  "boards": [
+    {
+      "name": "Main",
+      "id": {
+        "gitlab": "",
+        "glo": "",
+        "trello": "xxxxxxxx"
+      }
     },
-    "trello": {
-      "apikey": "",
-      "boards": [
-        {
-          "name": "Main",
-          "id": ""
-        },
-        {
-          "name": "Backlog",
-          "id": ""
-        }
-      ],
-      "token": "",
-      "url": "https://api.trello.com/1/"
+    {
+      "name": "Backlog",
+      "id": {
+        "gitlab": "",
+        "glo": "",
+        "trello": "xxxxxxxx"
+      }
     }
+  ],
+  "gitlab": {
+    "token": "",
+    "url": ""
+  },
+  "glo": {
+    "key": "",
+    "token": "",
+    "url": "https://gloapi.gitkraken.com/v1/glo"
+  },
+  "trello": {
+    "key": "xxx",
+    "token": "xxx",
+    "url": "https://api.trello.com/1"
   }
+}

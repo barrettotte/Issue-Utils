@@ -1,6 +1,6 @@
 config.json
 
-export-trello.json
+trello.export.json
 
 __pycache__
 

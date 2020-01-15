@@ -39,7 +39,7 @@ def main():
     boards, out_path = config['boards'], config['export']
 
     exported = export_trello(config['trello'], boards, out_path)
-    utils.write_file_json("{}{}export-trello.json".format(out_path, os.path.sep), exported)
+    utils.write_file_json("{}{}trello.export.json".format(out_path, os.path.sep), exported)
     
 
 if __name__ == "__main__":main()
