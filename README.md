@@ -43,5 +43,7 @@ I figured I'd include this for sake of completion.
 
 ## References
 * Trello API reference - https://developers.trello.com/reference/
-* GitKraken Glo API reference - https://gloapi.gitkraken.com/v1/docs/
+* GitKraken Glo API references
+  * https://support.gitkraken.com/developers/api/
+  * https://gloapi.gitkraken.com/v1/docs/
 

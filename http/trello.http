@@ -1,0 +1,26 @@
+# HTTP notes for Trello API
+
+@baseUrl=https://api.trello.com/1
+@token=wasd1234567890
+@apiKey=xxxxxxxxxxxxxxxxxxxx
+
+
+### Get board
+GET https://api.trello.com/1/boards/XXXXXXX?key={{apiKey}}&token={{token}} HTTP/1.1
+Content-Type: application/json
+
+
+### Get board's lists
+GET https://api.trello.com/1/boards/XXXXXXX/lists?key={{apiKey}}&token={{token}} HTTP/1.1
+Content-Type: application/json
+
+
+### Get board's open cards
+GET https://api.trello.com/1/boards/XXXXXXX?key={{apiKey}}&token={{token}}&cards=visible HTTP/1.1
+Content-Type: application/json
+
+
+### Get board's closed cards
+GET https://api.trello.com/1/boards/XXXXXXX?key={{apiKey}}&token={{token}}&cards=closed HTTP/1.1
+Content-Type: application/json
+

@@ -1,6 +1,14 @@
-config.json
-
-trello.export.json
 
 __pycache__
+
+config.json
+
+# Private HTTP test (has tokens/keys in it)
+private-test.http
+
+# Output files
+trello.export.json
+gitlab.export.json
+glo.export.json
+
 

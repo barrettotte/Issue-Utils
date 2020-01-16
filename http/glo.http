@@ -1,0 +1,14 @@
+# HTTP notes for GitKraken Glo API
+
+@baseUrl=https://gloapi.gitkraken.com/v1/glo
+@token=wasd1234567890
+
+
+### Create a board
+POST {{baseUrl}}/boards?access_token={{token}} HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "New Board"
+}
+
