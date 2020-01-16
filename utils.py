@@ -8,11 +8,8 @@ def read_file_json(file_path):
     raise Exception("Could not read file at path {}", file_path)
 
 def write_file_json(file_path, buffer):
-    #try:
     with open(file_path, 'w+') as f:
         f.write(get_pretty_json(buffer))
-    #except Exception: 
-    #    print("File at {} could not be written".format(file_path))
 
 # https://github.com/kennethreitz/requests/issues/3013
 def print_response(res):

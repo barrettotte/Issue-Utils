@@ -3,9 +3,9 @@ class Issue:
     identifier = ''
     is_open = True
     description = ''
-    list_id = ''
+    column_id = ''
     board_id = ''
-    milestone = ''
+    milestone_id = ''
     labels = []
     name = ''
     position = 0
@@ -24,10 +24,11 @@ class Issue:
         self.identifier = data['id']
         self.is_open = not data['closed']
         self.description = data['desc']
-        self.list_id = data['idList']
+        self.column_id = data['idList']
         self.board_id = data['idBoard']
-        self.milestone = -1
+        self.milestone_id = -1
         self.name = data['name']
+        self.labels = data['idLabels']
         self.position = data['pos'] if self.is_open else None
         self.completed_date = data['due']  # 2019-03-10T22:08:33.908Z
         self.creation_date = None          # checks lastActivity, but no creation

@@ -37,6 +37,7 @@ I figured I'd include this for sake of completion.
 ## To Do
 * Rewrite GitLab exporter
 * Import to GitKraken Glo
+* Add CLI to Exporter/Importer
 * Export from GitKraken Glo
 * Import issues to MSSQL table
 
@@ -44,6 +45,7 @@ I figured I'd include this for sake of completion.
 ## References
 * Trello API reference - https://developers.trello.com/reference/
 * GitKraken Glo API references
+  * 10 requests/s, 2500 requests/h
   * https://support.gitkraken.com/developers/api/
   * https://gloapi.gitkraken.com/v1/docs/
 
