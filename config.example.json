@@ -23,13 +23,13 @@
     "url": ""
   },
   "glo": {
-    "key": "",
-    "token": "",
-    "url": "https://gloapi.gitkraken.com/v1/glo"
+    "token": "xxxxxxxxxxxx",
+    "url": "https://gloapi.gitkraken.com/v1/glo",
+    "user": "xxxxxxxxxxxx"
   },
   "trello": {
-    "key": "xxx",
-    "token": "xxx",
+    "key": "xxxxxxxxxxxx",
+    "token": "xxxxxxxxxxxx",
     "url": "https://api.trello.com/1"
   }
 }
