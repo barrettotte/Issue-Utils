@@ -7,7 +7,6 @@ from datetime import datetime,date,timedelta
 def main():
     trello = []
     date_fmt = "%Y-%m-%dT%H:%M:%S.%fZ"
-
     with open('export.json', 'r') as f: 
         trello = json.load(f)
 

@@ -1,20 +1,16 @@
 import os, sys
 import utils as utils
 from models.issue import Issue
-from glo_importer import Glo_Importer
+from importers.glo_importer import Glo_Importer
 
 def main():
     config = utils.read_file_json('./config.json')
-    out_path = config['export']
-
+    export_data = utils.read_file_json(config['export'] + os.sep + 'export.json')
     target = 'glo'   # TODO: Make CLI
-    importer = None
 
     if target == 'glo':
-        importer = Glo_Importer(config['glo'])
+        Glo_Importer(config['glo']).import_boards(export_data)
     else:
         raise Exception("Unsupported target '{}'".format(target))
-    
-    importer.import_boards(utils.read_file_json(out_path + os.sep + 'export.json'))
 
 if __name__ == "__main__":main()
