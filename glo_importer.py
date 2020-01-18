@@ -2,7 +2,6 @@ import requests, json, time
 import utils as utils
 from models.issue import Issue
 
-
 class Glo_Importer():
 
     def __init__(self, config):
@@ -10,11 +9,11 @@ class Glo_Importer():
         self.user = config['user']
         self.base_url = config['url']
         self.color_dict = {
-          'yellow': [255, 255,   0], 'purple': [153,   0, 204],
-          'blue':   [  0, 102, 255], 'red':    [204,   0,   0],
-          'green':  [  0, 153,   0], 'orange': [255, 153,   0],
-          'black':  [  0,   0,   0], 'sky':    [  0, 204, 255],
-          'pink':   [255,  51, 153], 'lime':   [102, 255,  51]
+          'yellow': [255, 255,   0],  'purple': [153,   0, 204],
+          'blue':   [  0, 102, 255],  'red':    [204,   0,   0],
+          'green':  [  0, 153,   0],  'orange': [255, 153,   0],
+          'black':  [  0,   0,   0],  'sky':    [  0, 204, 255],
+          'pink':   [255,  51, 153],  'lime':   [102, 255,  51]
         }
 
 
@@ -40,6 +39,7 @@ class Glo_Importer():
         if resp.status_code in [200,201]: 
             return resp.json()
         utils.print_response(resp)
+
         if resp.status_code == 429:
             raise Exception("POST ({}) Glo rate limit hit.".format(resp.status_code))
         if resp.status_code == 502 and retry < 10:
@@ -81,46 +81,49 @@ class Glo_Importer():
         print("    Importing {} milestone(s)".format(len(milestones)))
         for idx,ms in enumerate(milestones):
             print(self.progress(idx, milestones, 'milestone'))
-            ms_body = {'name': ms['name'], 'state': 'open' if idx == len(milestones)-1 else 'closed'}
+            ms_body = {
+              'name': ms['name'], 
+              'due_date': ms['due_date'],
+              'state': 'open' # closed after issue imports
+            }
             new_ms = self.post(url, json.dumps(ms_body))
             ids.append({'new_id': new_ms['id'], 'old_id': ms['id']})
         return ids
 
 
+    def create_issue(self, issue, ids):
+        new_issue = {
+              'name': issue['name'],
+              'description': {'text': issue['description'], 'created_by': {'id': self.user}},
+              'board_id': issue['board_id'],
+              'column_id': self.find_id(issue['column_id'], ids['column']),
+              'assignees': [{'id': self.user}],
+              'due_date': issue['due_date'],
+              'created_by': {'id': self.user},
+        }
+        if not issue['is_open']:
+            new_issue['archived_date'] = issue['completed_date']
+        if len(issue['labels']) > 0:
+            new_issue['labels'] = [{'id': self.find_id(lbl, ids['label'])} for lbl in issue['labels']]
+        if issue['milestone_id'] != -1:
+            new_issue['milestone'] = {'id': self.find_id(issue['milestone_id'], ids['milestone'])}
+        return new_issue
+
+
     def import_issues(self, issues, url, ids):
-        debug_idx = 0 
+        batch_size,batch_issues = 100,[]
         print("    Importing {} issue(s)".format(len(issues)))
-        col_ids,ms_ids,label_ids = ids['column'], ids['milestone'], ids['label']
-
-        for idx,issue in enumerate(sorted(issues, key=lambda i: i['milestone_id'], reverse=True)):
+        for idx,issue in enumerate(issues):
             print(self.progress(idx, issues, 'issue'))
-            new_issue = Issue(issue)
-            
-            if new_issue.column_id != -1:
-                new_issue.column_id = self.find_id(new_issue.column_id, col_ids)
-            if new_issue.milestone_id != -1:
-                new_issue.milestone_id = self.find_id(new_issue.milestone_id, ms_ids)
-            
-            for i,lbl in enumerate(new_issue.labels):
-                new_issue.labels[i] = {'id': self.find_id(lbl, label_ids)}
-
-            # glo specific fields
-            issue_body = new_issue.__dict__
-            if new_issue.completed_date and not new_issue.is_open:
-                issue_body['archived_date'] = new_issue.completed_date
-            
-            # clean up before request
-            if len(issue_body['labels']) == 0:
-                issue_body.pop('labels', None) # remove labels from body
-
-            self.post(url, json.dumps(issue_body))
-
-            # TODO:
-            #   milestone id not being assigned correctly...
-
-            # TODO: DEBUG
-            debug_idx += 1
-            if debug_idx == 8: break
+            new_issue = self.create_issue(issue, ids)
+            batch_issues.append(new_issue)
+            if (idx+1) % batch_size == 0:
+                print("    Sending batch {}-{} ...".format((idx+1)-batch_size, (idx+1)))
+                self.post(url, json.dumps({'cards': batch_issues}))
+                batch_issues = []
+        if (idx+1) % batch_size != 0:
+            print("    Sending batch {}-{} ...".format(len(issues) - ((idx+1) % batch_size), (idx+1)))
+            self.post(url, json.dumps({'cards': batch_issues}))
 
 
     def import_boards(self, boards):
@@ -130,9 +133,11 @@ class Glo_Importer():
             new_board = self.post(self.base_url + "/boards", json.dumps({'name': board['name']}))
             board_url = self.base_url + "/boards/" + new_board['id']
             ids = {
-              'label':     self.import_labels(board['labels'], board_url + '/labels'),
-              'column':    self.import_columns(board['columns'], board_url + '/columns'),
+              'label': self.import_labels(board['labels'], board_url + '/labels'),
+              'column': self.import_columns(board['columns'], board_url + '/columns'),
               'milestone': self.import_milestones(board['milestones'], board_url + '/milestones')
             }
-            self.import_issues(board['issues'], board_url + '/cards', ids)
-            break #TODO: debug
+            issues = sorted(board['issues'], key=lambda i: i['milestone_id'], reverse=True)
+            self.import_issues(issues, board_url + '/cards/batch', ids)
+            time.sleep(3)
+

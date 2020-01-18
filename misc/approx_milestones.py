@@ -1,9 +1,8 @@
-# This is a one off script.
 # Attempt approximating the milestone an issue would have landed in
 #   based on the completion date and some leftover data I found in my GitLab boards.
 
 import json
-from datetime import datetime,date
+from datetime import datetime,date,timedelta
 
 def main():
     trello = []
@@ -27,18 +26,26 @@ def main():
                 card['completed_date'], 
                 milestone
             ))
+
             card['milestone_id'] = milestone
-            milestones.append({'name': "Week {}".format(milestone), 'id': milestone})
+            card['due_date'] = str(lowest + timedelta(weeks=milestone))
+            milestones.append({
+              'name': "Week {}".format(milestone), 
+              'id': milestone
+            })
         new_cards.append(card)
 
     print("\nApproximated milestone for {} card(s)".format(len(closed)))
     print("Oldest card: {}".format(lowest))
 
+    # get unique milestones and calculate due dates
+    unique_ms = sorted([dict(t) for t in {tuple(d.items()) for d in milestones}], key=lambda i: i['id'])
+    for i,ms in enumerate(unique_ms):
+        unique_ms[i]['due_date'] = str(lowest + timedelta(weeks=ms['id']))
+    trello[0]['milestones'] = unique_ms
     trello[0]['issues'] = sorted(new_cards, key=lambda i: i['milestone_id'])
-    trello[0]['milestones'] = sorted([dict(t) for t in {tuple(d.items()) for d in milestones}], key=lambda i: i['id'])
-
+    
     with open('export.json', 'w+') as f:
         f.write(json.dumps(trello, indent=2))
-
 
 if __name__ == "__main__":main()
