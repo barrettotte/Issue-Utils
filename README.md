@@ -35,11 +35,12 @@ I figured I'd include this for sake of completion.
 
 
 ## To Do
-* Rewrite GitLab exporter
 * Import to GitKraken Glo
 * Add CLI to Exporter/Importer
 * Export from GitKraken Glo
-* Import issues to MSSQL table
+* Import exported issues to MSSQL table
+* Rewrite GitLab exporter
+* Basic report of all of my milestones
 
 
 ## References
