@@ -6,3 +6,6 @@ export.json
 
 # Private HTTP test (has tokens/keys in it)
 private-test.http
+
+report.txt
+summary.txt
